@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop - OTF Fashions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0d0d0d;
+      --white:    #fafaf7;
+      --cream:    #f2ede5;
+      --gold:     #c9a84c;
+      --charcoal: #2a2a2a;
+      --mid:      #6b6b6b;
+      --border:   #e0d9ce;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+    }
+
+    /* ══════════════════════════════
+       NAV
+    ══════════════════════════════ */
+    nav {
+      background: var(--black);
+      height: 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-links > li { position: relative; }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding-bottom: 4px;
+      position: relative;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    /* Dropdown */
+    .nav-links .dropdown {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      border: 1px solid #2a2a2a;
+      min-width: 130px;
+      display: none;
+      flex-direction: column;
+      padding: 6px 0;
+      border-top: 2px solid var(--gold);
+    }
+
+    .nav-links li:hover .dropdown { display: flex; }
+
+    .dropdown a {
+      padding: 10px 18px;
+      color: #888 !important;
+      font-size: 0.75rem !important;
+      display: block;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover { color: var(--gold) !important; background: #1a1a1a; }
+    .dropdown a::after { display: none; }
+
+    /* Search */
+    .nav-search {
+      display: flex;
+      align-items: center;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nav-search input {
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 8px 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      color: var(--white);
+      width: 200px;
+    }
+
+    .nav-search input::placeholder { color: #555; }
+
+    .nav-search button {
+      background: var(--gold);
+      border: none;
+      padding: 9px 14px;
+      cursor: pointer;
+      color: var(--black);
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .nav-search button:hover { background: #e0bc60; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      background: var(--black);
+      padding: 68px 48px 58px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 10% 60%,
+        rgba(201,168,76,0.15) 0%, transparent 70%);
+    }
+
+    .hero-inner { position: relative; max-width: 520px; }
+
+    .hero .eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .hero p { color: #777; font-size: 0.92rem; font-weight: 300; }
+
+    .gold-bar { width: 44px; height: 2px; background: var(--gold); margin-top: 22px; }
+
+    /* ══════════════════════════════
+       FILTER BAR
+    ══════════════════════════════ */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 0;
+      padding: 0 44px;
+      overflow-x: auto;
+    }
+
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .f-btn {
+      background: none;
+      border: none;
+      padding: 15px 18px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--mid);
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .f-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 18px; right: 18px;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    .f-btn:hover,
+    .f-btn.active { color: var(--black); }
+    .f-btn.active::after,
+    .f-btn:hover::after { transform: scaleX(1); }
+
+    /* ══════════════════════════════
+       SEARCH RESULTS NOTE
+    ══════════════════════════════ */
+    #search-info {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+      font-size: 0.82rem;
+      color: var(--mid);
+      min-height: 28px;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════
+       MAIN
+    ══════════════════════════════ */
+    .shop-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 44px 24px 100px;
+    }
+
+    /* Section heading */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+      margin-top: 56px;
+    }
+
+    .sec-head:first-child { margin-top: 0; }
+
+    .sec-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .sec-head .rule { flex: 1; height: 1px; background: var(--border); }
+
+    .sec-head .count {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
+    }
+
+    /* No results */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--mid);
+    }
+
+    .no-results h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    /* ══════════════════════════════
+       PRODUCT GRID
+    ══════════════════════════════ */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+    }
+
+    /* ══════════════════════════════
+       CARD
+    ══════════════════════════════ */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.32s, box-shadow 0.32s;
+      animation: riseUp 0.55s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.04s; }
+    .card:nth-child(2) { animation-delay: 0.11s; }
+    .card:nth-child(3) { animation-delay: 0.18s; }
+    .card:nth-child(4) { animation-delay: 0.25s; }
+
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.11);
+    }
+
+    /* Image */
+    .card-img {
+      position: relative;
+      width: 100%;
+      padding-top: 118%;
+      overflow: hidden;
+      background: #e8e3db;
+    }
+
+    .card-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+
+    .card:hover .card-img img { transform: scale(1.08); }
+
+    /* Badge */
+    .badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 4px 10px;
+      z-index: 2;
+    }
+
+    .badge-new  { background: var(--black); color: var(--gold); }
+    .badge-sale { background: #b03a2e;      color: #fff; }
+    .badge-hot  { background: var(--gold);  color: var(--black); }
+
+    /* Quick add */
+    .quick-add {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50px;
+      background: rgba(13,13,13,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      z-index: 2;
+    }
+
+    .card:hover .quick-add { transform: translateY(0); }
+
+    .quick-add span {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* Body */
+    .card-body { padding: 16px 16px 18px; }
+
+    .card-brand {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+
+    .card-stars {
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.97rem;
+      color: var(--black);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-price {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .card-price .old {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--mid);
+      text-decoration: line-through;
+      margin-left: 5px;
+    }
+    .card-footer {
+  padding-top: 12px;
+}
+
+.btn-buy {
+  width: 100%;
+  padding: 11px 0;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn-buy::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #25D366; /* WhatsApp green */
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  z-index: 0;
+}
+
+.btn-buy:hover::after { transform: translateX(0); }
+
+.btn-buy:hover { color: var(--white); }
+
+.btn-buy span,
+.btn-buy { position: relative; z-index: 1; }
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: var(--black);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.74rem;
+      color: #555;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 768px) {
+      nav { padding: 0 18px; gap: 16px; }
+      .nav-links { gap: 18px; }
+      .hero { padding: 48px 20px 44px; }
+      .filter-bar { padding: 0 12px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+
+    @media (max-width: 500px) {
+      .nav-links { display: none; }
+      .nav-search input { width: 130px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">OTF <span>Fashions</span></a>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="shop.html" class="active">Shop ▾</a>
+      <div class="dropdown">
+        <a href="All">All</a>
+        <a href="Men">Men</a>
+        <a href="Women">Women</a>
+        <a href="Shoes">Shoes</a>
+        <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+      </div>
+    </li>
+
+  <div class="nav-search">
+    <input type="text" id="searchInput" placeholder="Search products…" oninput="filterProducts()"/>
+    <button onclick="filterProducts()">&#128269;</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">New Collection 2026</p>
+    <h1>Shop All Products</h1>
+    <p>Curated styles for every occasion</p>
+    <div class="gold-bar"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FILTER BAR
+══════════════════════════════ -->
+<div class="filter-bar">
+  <button class="f-btn active" onclick="setFilter('all', this)">All</button>
+  <button class="f-btn" onclick="setFilter('men', this)">Men</button>
+  <button class="f-btn" onclick="setFilter('women', this)">Women</button>
+  <button class="f-btn" onclick="setFilter('shoes', this)">Shoes</button>
+  <button class="f-btn" onclick="setFilter('accessories', this)">Accessories</button>
+  <button class="f-btn" onclick="setFilter('sale', this)">Sale</button>
+</div>
+
+<!-- Search info -->
+<div id="search-info"></div>
+
+<!-- ══════════════════════════════
+     MAIN
+══════════════════════════════ -->
+<main class="shop-main" id="shopMain">
+
+  <!-- MEN -->
+  <div class="sec-block" data-category="men">
+    <div class="sec-head">
+      <h2>Men Shirts</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="men shirt" data-category="men">
+        <div class="card-img">
+          <img src="mine (16).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Essentials</p>
+          <h3 class="card-name">Classic White Oxford Shirt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20White%20Oxford%20Shirt','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="black graphic tee men shirt" data-category="men">
+        <div class="card-img">
+          <img src="img (7).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Graphic Street Tee</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Graphic%20Street%20Tee','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="denim jacket men" data-category="men">
+        <div class="card-img">
+          <img src="mine (24).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Teal Denim Jacket</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Teal%20Denim%20Jacket','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="polo shirt men" data-category="men">
+        <div class="card-img">
+          <img src="mine (1).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Sport</p>
+          <h3 class="card-name">Slim Fit Polo Shirt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Slim%20Fit%20Polo%20Shirt','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /men -->
+
+  <!-- WOMEN -->
+  <div class="sec-block" data-category="women">
+    <div class="sec-head">
+      <h2>Women</h2>
+      <div class="rule"></div>
+      <span class="count">4 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="women dress floral" data-category="women">
+        <div class="card-img">
+          <img src="mine (2).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Femme</p>
+          <h3 class="card-name">Floral Wrap Dress</h3>
+          <div class="card-footer">      
+        <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Floral%20Wrap%20Dress','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="women blouse top crop" data-category="women">
+        <div class="card-img">
+          <img src="mine (11).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Femme</p>
+          <h3 class="card-name">Linen Crop Blouse</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Linen%20Crop%20Blouse','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="women blazer jacket" data-category="women">
+        <div class="card-img">
+          <img src="best (3).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Tailored Blazer</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Tailored%20Blazer','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="women skirt midi" data-category="women">
+        <div class="card-img">
+          <img src="mine (14).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Femme</p>
+          <h3 class="card-name">Midi Pleated Skirt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Midi%20Pleated%20Skirt','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /women -->
+
+  <!-- SHOES -->
+  <div class="sec-block" data-category="shoes">
+    <div class="sec-head">
+      <h2>Shoes</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="sneakers shoes sport" data-category="shoes">
+        <div class="card-img">
+          <img src="mine (21).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Sport</p>
+          <h3 class="card-name">Urban Runner Sneakers</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%An%20Urban%20Runner%20Sneaker','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="loafers shoes leather" data-category="shoes">
+        <div class="card-img">
+          <img src="mine (7).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Leather Slip-On Loafers</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Leather%20Slip-on%20Loafers','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="boots ankle chelsea shoes" data-category="shoes">
+        <div class="card-img">
+          <img src="mine (20).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Chelsea Ankle Boots</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Chelsea%20Ankle%20Boot','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /shoes -->
+
+  <!-- ACCESSORIES -->
+  <div class="sec-block" data-category="accessories">
+    <div class="sec-head">
+      <h2>Accessories</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="belt leather accessories" data-category="accessories">
+        <div class="card-img">
+          <img src="mine (8).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Genuine Leather Belt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Genuine%20Leather%20Belt','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="cap hat accessories" data-category="accessories">
+        <div class="card-img">
+          <img src="mine (9).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Structured Snapback Cap</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%want%20to%20buy%A%20Structured%20Snapback%20Cap','_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /accessories -->
+
+  <!-- No results message -->
+  <div class="no-results" id="noResults">
+    <h3>No products found</h3>
+    <p>Try a different search term or browse all categories.</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 <span>OTF Fashions</span> &mdash; All rights reserved
+</footer>
+
+<script>
+  
+
+  /* ── SEARCH ── */
+  function filterProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const info  = document.getElementById('noResults');
+    const cards = document.querySelectorAll('.card');
+    const blocks = document.querySelectorAll('.sec-block');
+    let totalVisible = 0;
+
+    blocks.forEach(block => {
+      const cat = block.dataset.category;
+      const catMatch = currentFilter === 'all' || currentFilter === cat;
+      let blockVisible = 0;
+
+      block.querySelectorAll('.card').forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const catCard = card.dataset.category;
+        const catOk = currentFilter === 'all' || currentFilter === catCard;
+        const searchOk = query === '' || name.includes(query);
+
+        if (catOk && searchOk) {
+          card.style.display = '';
+          blockVisible++;
+          totalVisible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      block.style.display = blockVisible > 0 ? '' : 'none';
+    });
+
+    // Info text
+    const si = document.getElementById('search-info');
+    if (query) {
+      si.textContent = totalVisible > 0
+        ? `Showing ${totalVisible} result${totalVisible !== 1 ? 's' : ''} for "${query}"`
+        : '';
+    } else {
+      si.textContent = '';
+    }
+
+    info.style.display = totalVisible === 0 ? 'block' : 'none';
+  }
+
+  /* ── CATEGORY FILTER ── */
+  function setFilter(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterProducts();
+  }
+
+  /* ── ENTER KEY ── */
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') filterProducts();
+  });
+</script>
+
+</body>
+</html>

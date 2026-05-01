@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - FashionHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #fafaf7;
+      --cream: #f2ede5;
+      --gold: #c9a84c;
+      --gold-light: #e8d5a3;
+      --charcoal: #2a2a2a;
+      --mid: #6b6b6b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--black);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #222;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.25s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black);
+      text-align: center;
+      padding: 80px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 120%, rgba(201,168,76,0.18) 0%, transparent 70%);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--white);
+      line-height: 1.1;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: #888;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      position: relative;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 20px auto 0;
+      position: relative;
+    }
+
+    /* ── MAIN GRID ── */
+    .contact-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--white);
+      border: 1px solid #e0d9ce;
+      padding: 48px 44px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.07);
+      animation: fadeUp 0.7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    .form-card .subtitle {
+      font-size: 0.84rem;
+      color: var(--mid);
+      margin-bottom: 36px;
+      letter-spacing: 0.02em;
+    }
+
+    .field { margin-bottom: 22px; }
+
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #ddd;
+      background: var(--cream);
+      padding: 13px 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.92rem;
+      color: var(--charcoal);
+      outline: none;
+      border-radius: 2px;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .button[type="Submit"] {
+      background: #1a1a2e;
+      color: green;
+      padding: 15px 40px;
+      border: none;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100px;
+      border-radius: 4px;
+      transition: background-color 0.3 ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #c8a96e;
+      color: #1a1a2e;
+    }
+
+    /* ── INFO PANEL ── */
+    .info-panel {
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .info-panel h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    .info-panel .subtitle {
+      font-size: 0.84rem;
+      color: var(--mid);
+      margin-bottom: 36px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid #e0d9ce;
+    }
+
+    .info-item:first-of-type { border-top: 1px solid #e0d9ce; }
+
+    .info-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .info-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .info-text strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .info-text span,
+    .info-text a {
+      font-size: 0.97rem;
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .info-text a:hover { color: var(--gold); }
+
+    /* ── SOCIAL ── */
+    .social-row { margin-top: 36px; }
+
+    .social-row p {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .social-links { display: flex; gap: 12px; }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+      border-radius: 2px;
+    }
+
+    .social-links a:hover {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .contact-section { grid-template-columns: 1fr; gap: 40px; }
+      nav { padding: 0 20px; }
+      .form-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Fashion<span>Hub</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Shop.html">Shop</a></li>
+      <li><a href="accessories.html">Accessories</a></li>
+      <li><a href="Contact.html" class="active">Contact</a></li>
+      <li><a href="about.html">About</a>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Reach Out</p>
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you</p>
+    <div class="divider"></div>
+  </section>
+
+  <!-- CONTACT GRID -->
+  <section class="contact-section">
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h2>Send a Message</h2>
+      <p class="subtitle">Fill in the details below and we'll get back to you shortly.</p>
+      <form action="https://formspree.io/f/xeenqbkz" method="POST">
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="e.g. Jane Doe" />
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" />
+      </div>
+
+      <div class="field">
+        <label for="message">Your Message</label>
+        <textarea id="message" placeholder="Tell us how we can help…"></textarea>
+      </div>
+      <button type="submit">SEND MESSAGE</button>
+    </form>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-panel">
+      <h2>Get In Touch</h2>
+      <p class="subtitle">Prefer to reach us directly? Here's how.</p>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <div class="info-text">
+          <strong>Email</strong>
+          <a href="mailto:otffashionjinja@gmail.com?subject=Order Inquiry&body=Hello, I would Like to know more information about your services">
+            Contact Us
+          </a>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 18.72V21a2 2 0 01-2 2h-1C9.716 23 1 14.284 1 5V4a2 2 0 012-2z"/>
+          </svg>
+        </div>
+        <div class="info-text">
+          <strong>Phone</strong>
+          <span>+256755213970</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path stroke-linecap="round"
+              d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/>
+          </svg>
+        </div>
+        <div class="info-text">
+          <strong>Store</strong>
+          <a href="">Online Store</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 <span>FashionHub</span> &mdash; All rights reserved
+  </footer>
+
+</body>
+</html>

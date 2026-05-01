@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - OTF Fashions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0d0d0d;
+      --white:    #fafaf7;
+      --cream:    #f2ede5;
+      --gold:     #c9a84c;
+      --charcoal: #2a2a2a;
+      --mid:      #6b6b6b;
+      --border:   #e0d9ce;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      background: var(--black);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #222;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.25s;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* ══ HERO ══ */
+    .hero {
+      background: var(--black);
+      text-align: center;
+      padding: 80px 24px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 120%,
+        rgba(201,168,76,0.18) 0%, transparent 70%);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--white);
+      line-height: 1.1;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: #888;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      position: relative;
+    }
+
+    .divider {
+      width: 48px; height: 2px;
+      background: var(--gold);
+      margin: 20px auto 0;
+    }
+
+    /* ══ ABOUT SECTION ══ */
+    .about-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* ══ LEFT — WHO WE ARE ══ */
+    .about-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 48px 44px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.07);
+      animation: fadeUp 0.7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    .about-card .subtitle {
+      font-size: 0.84rem;
+      color: var(--mid);
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+    }
+
+    .about-card p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--charcoal);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .about-card p:last-of-type { margin-bottom: 32px; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-box {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 18px 12px;
+      text-align: center;
+      border-radius: 2px;
+    }
+
+    .stat-box .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-box .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
+    }
+
+    /* CTA button */
+    .btn-shop {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+    }
+
+    .btn-shop::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+      z-index: 0;
+    }
+
+    .btn-shop:hover::after { transform: translateX(0); }
+
+    .btn-shop span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+    }
+
+    .btn-shop:hover span { color: var(--black); }
+
+    /* ══ RIGHT — INFO PANEL ══ */
+    .info-panel {
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+
+    .info-panel h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    .info-panel .subtitle {
+      font-size: 0.84rem;
+      color: var(--mid);
+      margin-bottom: 36px;
+    }
+
+    /* Why choose us items */
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .why-item:first-of-type { border-top: 1px solid var(--border); }
+
+    .why-icon {
+      width: 42px; height: 42px;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .why-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .why-text strong {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .why-text p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Team row */
+    .team-row {
+      margin-top: 36px;
+    }
+
+    .team-row p {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .team-avatars {
+      display: flex;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      font-weight: 700;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .avatar:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    /* ══ MISSION BANNER ══ */
+    .mission-banner {
+      background: var(--black);
+      text-align: center;
+      padding: 64px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 80% at 50% 0%,
+        rgba(201,168,76,0.12) 0%, transparent 70%);
+    }
+
+    .mission-banner .eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .mission-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      color: var(--white);
+      max-width: 620px;
+      margin: 0 auto 16px;
+      line-height: 1.3;
+      position: relative;
+    }
+
+    .mission-banner p {
+      color: #777;
+      font-size: 0.92rem;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.8;
+      position: relative;
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: var(--black);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 720px) {
+      .about-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      nav { padding: 0 20px; }
+      .about-card { padding: 32px 24px; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#" class="nav-logo">OTF<span>Fashions</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-eyebrow">Our Story</p>
+  <h1>About OTF Fashions</h1>
+  <p>Style, comfort and passion — all in one place</p>
+  <div class="divider"></div>
+</section>
+
+<!-- ══ ABOUT GRID ══ -->
+<section class="about-section">
+
+  <!-- LEFT -->
+  <div class="about-card">
+    <h2>Who We Are</h2>
+    <p class="subtitle">A brand built on style and purpose.</p>
+
+    <p>OTF Fashions is your go-to destination for modern and stylish clothing. We bring together simplicity, comfort, and trend-driven fashion to help you express your unique style.</p>
+
+    <p>From casual wear to statement pieces, our collections are designed to fit every moment of your life — whether you're dressing for the office, a night out, or just everyday living.</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="num">5K+</span>
+        <span class="label">Customers</span>
+      </div>
+      <div class="stat-box">
+        <span class="num">200+</span>
+        <span class="label">Products</span>
+      </div>
+      <div class="stat-box">
+        <span class="num">4.9★</span>
+        <span class="label">Rating</span>
+      </div>
+    </div>
+
+    <a href="shop.html" class="btn-shop"><span>Start Shopping</span></a>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="info-panel">
+    <h2>Why Choose Us?</h2>
+    <p class="subtitle">Here's what sets FashionHub apart.</p>
+
+    <div class="why-item">
+      <div class="why-icon">
+        <!-- Shield / quality icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3l8 4v5c0 5-3.5 9.74-8 11-4.5-1.26-8-6-8-11V7l8-4z"/>
+        </svg>
+      </div>
+      <div class="why-text">
+        <strong>Quality</strong>
+        <p>Carefully selected materials for long-lasting wear that keeps you looking sharp season after season.</p>
+      </div>
+    </div>
+
+    <div class="why-item">
+      <div class="why-icon">
+        <!-- Trend / sparkle icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/>
+        </svg>
+      </div>
+      <div class="why-text">
+        <strong>Style</strong>
+        <p>Modern designs inspired by global trends, curated by our in-house fashion team.</p>
+      </div>
+    </div>
+
+    <div class="why-item">
+      <div class="why-icon">
+        <!-- Heart / comfort icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div class="why-text">
+        <strong>Comfort</strong>
+        <p>Clothing made for everyday life — soft, breathable fabrics that move with you all day long.</p>
+      </div>
+    </div>
+
+    <div class="why-item">
+      <div class="why-icon">
+        <!-- Truck / delivery icon -->
+        <svg viewBox="0 0 24 24">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 4v4h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </div>
+      <div class="why-text">
+        <strong>Fast Delivery</strong>
+        <p>We ship nationwide with reliable, tracked delivery so your order arrives on time, every time.</p>
+      </div>
+    </div>
+
+    <div class="team-row">
+      <p>Meet the Team</p>
+      <div class="team-avatars">
+        <div class="avatar">A</div>
+        <div class="avatar">K</div>
+        <div class="avatar">T</div>
+        <div class="avatar">M</div>
+        <div class="avatar">J</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ MISSION BANNER ══ -->
+<section class="mission-banner">
+  <p class="eyebrow">Our Mission</p>
+  <h2>"Fashion should be accessible, expressive, and made for everyone."</h2>
+  <p>We believe great style shouldn't cost a fortune. FashionHub is committed to bringing you premium-looking fashion at prices that make sense.</p>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  &copy; 2026 <span>OFT Fashions</span> &mdash; All rights reserved
+</footer>
+
+</body>
+</html>

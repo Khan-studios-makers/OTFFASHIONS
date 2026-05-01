@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accessories - OTF Fashions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0d0d0d;
+      --white:    #fafaf7;
+      --cream:    #f2ede5;
+      --gold:     #c9a84c;
+      --charcoal: #2a2a2a;
+      --mid:      #6b6b6b;
+      --border:   #e0d9ce;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+    }
+
+    /* ══════════════════════════════
+       NAV
+    ══════════════════════════════ */
+    nav {
+      background: var(--black);
+      height: 64px;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-links > li { position: relative; }
+
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding-bottom: 4px;
+      position: relative;
+      transition: color 0.25s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    /* Dropdown */
+    .nav-links .dropdown {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      border: 1px solid #2a2a2a;
+      min-width: 150px;
+      display: none;
+      flex-direction: column;
+      padding: 6px 0;
+      border-top: 2px solid var(--gold);
+    }
+
+    .nav-links li:hover .dropdown { display: flex; }
+
+    .dropdown a {
+      padding: 10px 18px;
+      color: #888 !important;
+      font-size: 0.75rem !important;
+      display: block;
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover { color: var(--gold) !important; background: #1a1a1a; }
+    .dropdown a::after { display: none; }
+
+    /* Search */
+    .nav-search {
+      display: flex;
+      align-items: center;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nav-search input {
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 8px 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      color: var(--white);
+      width: 200px;
+    }
+
+    .nav-search input::placeholder { color: #555; }
+
+    .nav-search button {
+      background: var(--gold);
+      border: none;
+      padding: 9px 14px;
+      cursor: pointer;
+      color: var(--black);
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .nav-search button:hover { background: #e0bc60; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      background: var(--black);
+      padding: 68px 48px 58px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 10% 60%,
+        rgba(201,168,76,0.15) 0%, transparent 70%);
+    }
+
+    .hero-inner { position: relative; max-width: 520px; }
+
+    .hero .eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .hero p { color: #777; font-size: 0.92rem; font-weight: 300; }
+
+    .gold-bar { width: 44px; height: 2px; background: var(--gold); margin-top: 22px; }
+
+    /* ══════════════════════════════
+       FILTER BAR
+    ══════════════════════════════ */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 0;
+      padding: 0 44px;
+      overflow-x: auto;
+    }
+
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .f-btn {
+      background: none;
+      border: none;
+      padding: 15px 18px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--mid);
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .f-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 18px; right: 18px;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    .f-btn:hover,
+    .f-btn.active { color: var(--black); }
+    .f-btn.active::after,
+    .f-btn:hover::after { transform: scaleX(1); }
+
+    /* ══════════════════════════════
+       SEARCH INFO
+    ══════════════════════════════ */
+    #search-info {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+      font-size: 0.82rem;
+      color: var(--mid);
+      min-height: 28px;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════
+       MAIN
+    ══════════════════════════════ */
+    .shop-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 44px 24px 100px;
+    }
+
+    /* Section heading */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+      margin-top: 56px;
+    }
+
+    .sec-head:first-child { margin-top: 0; }
+
+    .sec-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    .sec-head .rule { flex: 1; height: 1px; background: var(--border); }
+
+    .sec-head .count {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
+    }
+
+    /* No results */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--mid);
+    }
+
+    .no-results h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+
+    /* ══════════════════════════════
+       PRODUCT GRID
+    ══════════════════════════════ */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+    }
+
+    /* ══════════════════════════════
+       CARD
+    ══════════════════════════════ */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.32s, box-shadow 0.32s;
+      animation: riseUp 0.55s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.04s; }
+    .card:nth-child(2) { animation-delay: 0.11s; }
+    .card:nth-child(3) { animation-delay: 0.18s; }
+
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.11);
+    }
+
+    /* Image */
+    .card-img {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+      background: #e8e3db;
+    }
+
+    .card-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+
+    .card:hover .card-img img { transform: scale(1.08); }
+
+    /* Body */
+    .card-body { padding: 16px 16px 18px; }
+
+    .card-brand {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.97rem;
+      color: var(--black);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* BUY NOW button */
+    .btn-buy {
+      background: var(--black);
+      color: var(--gold);
+      border: none;
+      padding: 9px 20px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .btn-buy:hover { background: var(--gold); color: var(--black); }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: var(--black);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.74rem;
+      color: #555;
+      letter-spacing: 0.08em;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 768px) {
+      nav { padding: 0 18px; gap: 16px; }
+      .nav-links { gap: 18px; }
+      .hero { padding: 48px 20px 44px; }
+      .filter-bar { padding: 0 12px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+
+    @media (max-width: 500px) {
+      .nav-links { display: none; }
+      .nav-search input { width: 130px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">OTF <span>Fashions</span></a>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="accessories.html" class="active">Accessories ▾</a>
+      <div class="dropdown">
+        <a href="#" onclick="setFilter('all', document.querySelector('.f-btn')); return false;">All</a>
+        <a href="#" onclick="setFilter('classicwatches', document.querySelectorAll('.f-btn')[1]); return false;">Classic Watches</a>
+        <a href="#" onclick="setFilter('leatherbags', document.querySelectorAll('.f-btn')[2]); return false;">Leather Bags</a>
+        <a href="#" onclick="setFilter('sunglasses', document.querySelectorAll('.f-btn')[3]); return false;">Sunglasses</a>
+        <a href="#" onclick="setFilter('menbelts', document.querySelectorAll('.f-btn')[4]); return false;">Men Belts</a>
+        <a href="#" onclick="setFilter('baseballcaps', document.querySelectorAll('.f-btn')[5]); return false;">Baseball Caps</a>
+      </div>
+    </li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+  <div class="nav-search">
+    <input type="text" id="searchInput" placeholder="Search accessories…" oninput="filterProducts()"/>
+    <button onclick="filterProducts()">&#128269;</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">New Collection 2026</p>
+    <h1>Shop Accessories</h1>
+    <p>Curated accessories for every occasion</p>
+    <div class="gold-bar"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FILTER BAR
+══════════════════════════════ -->
+<div class="filter-bar">
+  <button class="f-btn active" onclick="setFilter('all', this)">All</button>
+  <button class="f-btn" onclick="setFilter('classicwatches', this)">Classic Watch</button>
+  <button class="f-btn" onclick="setFilter('leatherbags', this)">Leather Bags</button>
+  <button class="f-btn" onclick="setFilter('sunglasses', this)">Sunglasses</button>
+  <button class="f-btn" onclick="setFilter('menbelts', this)">Men Belts</button>
+  <button class="f-btn" onclick="setFilter('baseballcaps', this)">Baseball Caps</button>
+</div>
+
+<!-- Search info -->
+<div id="search-info"></div>
+
+<!-- ══════════════════════════════
+     SHOP MAIN
+══════════════════════════════ -->
+<div class="shop-main">
+
+  <!-- No results -->
+  <div class="no-results" id="noResults">
+    <h3>No accessories found</h3>
+    <p>Try a different search term or category.</p>
+  </div>
+
+  <!-- ── CLASSIC WATCHES ── -->
+  <div class="sec-block" data-category="classicwatches">
+    <div class="sec-head">
+      <h2>Classic Watches</h2>
+      <div class="rule"></div>
+      <span class="count">3 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="gold classic watch luxury" data-category="classicwatches">
+        <div class="card-img">
+          <img src="mine (5).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Gold Luxury Classic Watch</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Gold%20Luxury%20Classic%20Watch', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="silver classic watch minimalist" data-category="classicwatches">
+        <div class="card-img">
+          <img src="mine (17).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Essentials</p>
+          <h3 class="card-name">Silver Minimalist Watch</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Silver%20Minimalist%20Watch', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="black leather strap classic watch" data-category="classicwatches">
+        <div class="card-img">
+          <img src="mine (13).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Black Leather Strap Watch</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Black%20Leather%20Strap%20Watch', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /classicwatches -->
+
+  <!-- ── LEATHER BAGS ── -->
+  <div class="sec-block" data-category="leatherbags">
+    <div class="sec-head">
+      <h2>Leather Bags</h2>
+      <div class="rule"></div>
+      <span class="count">3 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="brown leather tote bag handbag" data-category="leatherbags">
+        <div class="card-img">
+          <img src="mine (19).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Femme</p>
+          <h3 class="card-name">Brown Leather Tote Bag</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Brown%20Leather%20Tote%20Bag', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="black leather crossbody bag" data-category="leatherbags">
+        <div class="card-img">
+          <img src="mine (3).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Black Leather Crossbody Bag</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Black%20Leather%20Crossbody%20Bag', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="tan leather satchel bag messenger" data-category="leatherbags">
+        <div class="card-img">
+          <img src="mine (4).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Tan Leather Satchel Bag</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Tan%20Leather%20Satchel%20Bag', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /leatherbags -->
+
+  <!-- ── SUNGLASSES ── -->
+  <div class="sec-block" data-category="sunglasses">
+    <div class="sec-head">
+      <h2>Sunglasses</h2>
+      <div class="rule"></div>
+      <span class="count">3 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="aviator sunglasses gold frame" data-category="sunglasses">
+        <div class="card-img">
+          <img src="mine (15).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Sport</p>
+          <h3 class="card-name">Classic Aviator Sunglasses</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Classic%20Aviator%20Sunglasses', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="round retro sunglasses black" data-category="sunglasses">
+        <div class="card-img">
+          <img src="mine (10).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Retro Round Sunglasses</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Retro%20Round%20Sunglasses', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="oversized square sunglasses women" data-category="sunglasses">
+        <div class="card-img">
+          <img src="mine (12).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Femme</p>
+          <h3 class="card-name">Oversized Square Sunglasses</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Oversized%20Square%20Sunglasses', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /sunglasses -->
+
+  <!-- ── MEN BELTS ── -->
+  <div class="sec-block" data-category="menbelts">
+    <div class="sec-head">
+      <h2>Men Belts</h2>
+      <div class="rule"></div>
+      <span class="count">3 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="black leather men belt formal" data-category="menbelts">
+        <div class="card-img">
+          <img src="mine (6).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Premium</p>
+          <h3 class="card-name">Black Formal Leather Belt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Black%20Formal%20Leather%20Belt', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="brown men belt casual woven" data-category="menbelts">
+        <div class="card-img">
+          <img src="mine (8).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Essentials</p>
+          <h3 class="card-name">Brown Casual Woven Belt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Brown%20Casual%20Woven%20Belt', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="tan reversible men belt gold buckle" data-category="menbelts">
+        <div class="card-img">
+          <img src="mine (26).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Tan Reversible Gold Buckle Belt</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Tan%20Reversible%20Gold%20Buckle%20Belt', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /menbelts -->
+
+  <!-- ── BASEBALL CAPS ── -->
+  <div class="sec-block" data-category="baseballcaps">
+    <div class="sec-head">
+      <h2>Baseball Caps</h2>
+      <div class="rule"></div>
+      <span class="count">3 items</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="card" data-name="black baseball cap snapback classic" data-category="baseballcaps">
+        <div class="card-img">
+          <img src="mine (9).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Urban</p>
+          <h3 class="card-name">Classic Black Snapback Cap</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Classic%20Black%20Snapback%20Cap', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="white baseball cap embroidered logo" data-category="baseballcaps">
+        <div class="card-img">
+          <img src="mine (23).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Essentials</p>
+          <h3 class="card-name">White Embroidered Logo Cap</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20White%20Embroidered%20Logo%20Cap', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-name="khaki tan baseball cap dad hat adjustable" data-category="baseballcaps">
+        <div class="card-img">
+          <img src="mine (18).jpg">
+        </div>
+        <div class="card-body">
+          <p class="card-brand">OTF Sport</p>
+          <h3 class="card-name">Khaki Adjustable Dad Hat</h3>
+          <div class="card-footer">
+            <button class="btn-buy" onclick="window.open('https://wa.me/+256755213970?text=Hello,%20I%20WANT%20TO%20BUY%20THIS%20Khaki%20Adjustable%20Dad%20Hat', '_blank')">BUY NOW</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /baseballcaps -->
+
+</div><!-- /shop-main -->
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 <span>OTF Fashions</span> &mdash; All rights reserved
+</footer>
+
+<script>
+  let currentFilter = 'all';
+
+  /* ── SEARCH ── */
+  function filterProducts() {
+    const query  = document.getElementById('searchInput').value.toLowerCase().trim();
+    const info   = document.getElementById('noResults');
+    const blocks = document.querySelectorAll('.sec-block');
+    let totalVisible = 0;
+
+    blocks.forEach(block => {
+      let blockVisible = 0;
+
+      block.querySelectorAll('.card').forEach(card => {
+        const name     = card.dataset.name.toLowerCase();
+        const catCard  = card.dataset.category;
+        const catOk    = currentFilter === 'all' || currentFilter === catCard;
+        const searchOk = query === '' || name.includes(query);
+
+        if (catOk && searchOk) {
+          card.style.display = '';
+          blockVisible++;
+          totalVisible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      block.style.display = blockVisible > 0 ? '' : 'none';
+    });
+
+    const si = document.getElementById('search-info');
+    if (query) {
+      si.textContent = totalVisible > 0
+        ? `Showing ${totalVisible} result${totalVisible !== 1 ? 's' : ''} for "${query}"`
+        : '';
+    } else {
+      si.textContent = '';
+    }
+
+    info.style.display = totalVisible === 0 ? 'block' : 'none';
+  }
+
+  /* ── CATEGORY FILTER ── */
+  function setFilter(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    filterProducts();
+  }
+
+  /* ── ENTER KEY ── */
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') filterProducts();
+  });
+</script>
+
+</body>
+</html>
